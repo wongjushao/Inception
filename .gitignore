@@ -1,0 +1,15 @@
+# Environment files with sensitive data
+srcs/.env
+secrets/*
+# Docker volumes data
+data/
+
+# System files
+.DS_Store
+.vscode/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
