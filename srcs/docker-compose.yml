@@ -41,6 +41,7 @@ services:
       - "8443:443"
     volumes:
       - wp-data:/var/www/html
+      - ssl-data:/etc/nginx/ssl
     networks:
       - inception
     depends_on:
@@ -64,3 +65,9 @@ volumes:
       type: none
       o: bind
       device: ${DATA_PATH}/wordpress
+  ssl-data:
+    driver: local
+    driver_opts:
+      type: none
+      o: bind
+      device: ${DATA_PATH}/ssl

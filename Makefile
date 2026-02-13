@@ -7,32 +7,32 @@ COMPOSE_FILE = srcs/docker-compose.yml
 all: up
 
 build:
-	@docker-compose -f $(COMPOSE_FILE) build
+	@docker compose -f $(COMPOSE_FILE) build
 
 up:
-	@mkdir -p $(DATA_PATH)/mysql $(DATA_PATH)/wordpress
-	@docker-compose -f $(COMPOSE_FILE) up -d
+	@mkdir -p $(DATA_PATH)/mysql $(DATA_PATH)/wordpress $(DATA_PATH)/ssl
+	@docker compose -f $(COMPOSE_FILE) up -d
 	@echo "Access your site at: https://$(DOMAIN_NAME)"
 
 start: build up
 
 down:
-	@docker-compose -f $(COMPOSE_FILE) down
+	@docker compose -f $(COMPOSE_FILE) down
 
 clean:
-	@docker-compose -f $(COMPOSE_FILE) down -v
+	@docker compose -f $(COMPOSE_FILE) down -v
 
 fclean: clean
-	@docker-compose -f $(COMPOSE_FILE) down -v --rmi all
-	@rm -rf $(DATA_PATH)/mysql $(DATA_PATH)/wordpress
+	@docker compose -f $(COMPOSE_FILE) down -v --rmi all
+	@rm -rf $(DATA_PATH)/mysql $(DATA_PATH)/wordpress $(DATA_PATH)/ssl
 
 re: fclean all
 
 status:
-	@docker-compose -f $(COMPOSE_FILE) ps
+	@docker compose -f $(COMPOSE_FILE) ps
 
 logs:
-	@docker-compose -f $(COMPOSE_FILE) logs -f
+	@docker compose -f $(COMPOSE_FILE) logs -f
 
 restart: down up
 
