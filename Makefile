@@ -1,20 +1,35 @@
 # Inception Makefile
 
-include srcs/.env
+ENV_FILE = srcs/.env
+ENV_EXAMPLE = srcs/.env.example
+
+# Check if .env file exists, if not copy from .env.example
+$(ENV_FILE):
+	@if [ ! -f $(ENV_FILE) ]; then \
+		echo "Error: $(ENV_FILE) not found!"; \
+		echo "Please create $(ENV_FILE) from $(ENV_EXAMPLE)"; \
+		echo "Run: cp $(ENV_EXAMPLE) $(ENV_FILE)"; \
+		echo "Then edit $(ENV_FILE) with your configuration."; \
+		exit 1; \
+	fi
+
+-include srcs/.env
 
 COMPOSE_FILE = srcs/docker-compose.yml
 
-all: up
+all: check-env up
 
-build:
+check-env: $(ENV_FILE)
+
+build: check-env
 	@docker compose -f $(COMPOSE_FILE) build
 
-up:
+up: check-env
 	@mkdir -p $(DATA_PATH)/mysql $(DATA_PATH)/wordpress secrets/ssl
 	@docker compose -f $(COMPOSE_FILE) up -d
 	@echo "Access your site at: https://$(DOMAIN_NAME)"
 
-start: build up
+start: check-env build up
 
 down:
 	@docker compose -f $(COMPOSE_FILE) down

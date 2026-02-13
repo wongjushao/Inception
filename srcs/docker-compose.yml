@@ -38,7 +38,7 @@ services:
     env_file:
       - .env
     ports:
-      - "8443:443"
+      - "443:443"
     volumes:
       - wp-data:/var/www/html
       - ssl-data:/etc/nginx/ssl
