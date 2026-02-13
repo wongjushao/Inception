@@ -10,7 +10,7 @@ build:
 	@docker compose -f $(COMPOSE_FILE) build
 
 up:
-	@mkdir -p $(DATA_PATH)/mysql $(DATA_PATH)/wordpress $(DATA_PATH)/ssl
+	@mkdir -p $(DATA_PATH)/mysql $(DATA_PATH)/wordpress secrets/ssl
 	@docker compose -f $(COMPOSE_FILE) up -d
 	@echo "Access your site at: https://$(DOMAIN_NAME)"
 
@@ -24,7 +24,7 @@ clean:
 
 fclean: clean
 	@docker compose -f $(COMPOSE_FILE) down -v --rmi all
-	@rm -rf $(DATA_PATH)/mysql $(DATA_PATH)/wordpress $(DATA_PATH)/ssl
+	@rm -rf $(DATA_PATH)/mysql $(DATA_PATH)/wordpress secrets/ssl
 
 re: fclean all
 

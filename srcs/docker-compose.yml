@@ -70,4 +70,4 @@ volumes:
     driver_opts:
       type: none
       o: bind
-      device: ${DATA_PATH}/ssl
+      device: ../secrets/ssl
