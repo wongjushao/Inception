@@ -26,7 +26,7 @@ up: check-env
 	@docker compose -f $(COMPOSE_FILE) up -d
 	@echo "Access your site at: https://$(DOMAIN_NAME)"
 
-start: check-env build up
+start: build up
 
 down:
 	@docker compose -f $(COMPOSE_FILE) down
