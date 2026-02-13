@@ -3,8 +3,13 @@
 ENV_FILE = srcs/.env
 ENV_EXAMPLE = srcs/.env.example
 
-# Check if .env file exists, if not copy from .env.example
-$(ENV_FILE):
+-include srcs/.env
+
+COMPOSE_FILE = srcs/docker-compose.yml
+
+all: check-env up
+
+check-env:
 	@if [ ! -f $(ENV_FILE) ]; then \
 		echo "Error: $(ENV_FILE) not found!"; \
 		echo "Please create $(ENV_FILE) from $(ENV_EXAMPLE)"; \
@@ -12,14 +17,6 @@ $(ENV_FILE):
 		echo "Then edit $(ENV_FILE) with your configuration."; \
 		exit 1; \
 	fi
-
--include srcs/.env
-
-COMPOSE_FILE = srcs/docker-compose.yml
-
-all: check-env up
-
-check-env: $(ENV_FILE)
 
 build: check-env
 	@docker compose -f $(COMPOSE_FILE) build
@@ -51,4 +48,4 @@ logs:
 
 restart: down up
 
-.PHONY: all build up start down clean fclean re status logs restart
+.PHONY: all build up start down clean fclean re status logs restart check-env
