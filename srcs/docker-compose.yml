@@ -1,7 +1,10 @@
 services:
   mariadb:
     container_name: mariadb
-    image: mariadb:custom
+    image: mariadb
+    build:
+      context: ./requirememnts/mariadb
+      dockerfile: Dockerfile
     env_file:
       - .env
     volumes:
@@ -12,7 +15,10 @@ services:
 
   wordpress:
     container_name: wordpress
-    image: wordpress:custom
+    image: wordpress
+    build:
+      context: ./requirememnts/wordpress
+      dockerfile: Dockerfile
     env_file:
       - .env
     volumes:
@@ -25,7 +31,10 @@ services:
 
   nginx:
     container_name: nginx
-    image: nginx:custom
+    image: nginx
+    build:
+      context: ./requirememnts/nginx
+      dockerfile: Dockerfile
     env_file:
       - .env
     ports:
