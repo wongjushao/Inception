@@ -1,10 +1,7 @@
 services:
   mariadb:
     container_name: mariadb
-    image: mariadb
-    build:
-      context: ./requirememnts/mariadb
-      dockerfile: Dockerfile
+    image: mariadb:custom
     env_file:
       - .env
     volumes:
@@ -15,10 +12,7 @@ services:
 
   wordpress:
     container_name: wordpress
-    image: wordpress
-    build:
-      context: ./requirememnts/wordpress
-      dockerfile: Dockerfile
+    image: wordpress:custom
     env_file:
       - .env
     volumes:
@@ -31,10 +25,7 @@ services:
 
   nginx:
     container_name: nginx
-    image: nginx
-    build:
-      context: ./requirememnts/nginx
-      dockerfile: Dockerfile
+    image: nginx:custom
     env_file:
       - .env
     ports:
@@ -54,20 +45,5 @@ networks:
 
 volumes:
   db-data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ${DATA_PATH}/mysql
   wp-data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ${DATA_PATH}/wordpress
   ssl-data:
-    driver: local
-    driver_opts:
-      type: none
-      o: bind
-      device: ../secrets/ssl
