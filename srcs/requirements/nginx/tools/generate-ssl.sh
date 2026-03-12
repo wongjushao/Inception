@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Replace DOMAIN_NAME in nginx.conf with actual domain from environment
-sed -i "s/DOMAIN_NAME/${DOMAIN_NAME}/g" /etc/nginx/nginx.conf
+# Generate nginx.conf from template with environment variable substitution
+envsubst '${DOMAIN_NAME}' < /etc/nginx/nginx.conf.template > /etc/nginx/nginx.conf
 
 # Generate self-signed SSL certificate if it doesn't exist
 if [ ! -f "/etc/nginx/ssl/nginx.crt" ]; then

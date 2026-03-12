@@ -7,8 +7,8 @@ RUN apt-get update && \
     openssl && \
     rm -rf /var/lib/apt/lists/*
 
-# Copy NGINX configuration
-COPY conf/nginx.conf /etc/nginx/nginx.conf
+# Copy NGINX configuration template
+COPY conf/nginx.conf /etc/nginx/nginx.conf.template
 
 # Copy SSL generation script
 COPY tools/generate-ssl.sh /usr/local/bin/generate-ssl.sh

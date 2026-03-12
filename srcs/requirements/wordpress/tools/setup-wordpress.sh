@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# Wait for MariaDB to be ready
-echo "Waiting for MariaDB to be ready..."
-until mysqladmin ping -h mariadb -u"${MYSQL_USER}" -p"${MYSQL_PASSWORD}" --silent; do
-    echo "MariaDB is unavailable - sleeping"
-    sleep 2
+# Brief wait for MariaDB socket (healthcheck ensures it's ready)
+echo "Connecting to MariaDB..."
+for i in $(seq 1 10); do
+    mysqladmin ping -h mariadb -u"${MYSQL_USER}" -p"${MYSQL_PASSWORD}" --silent 2>/dev/null && break
+    sleep 1
 done
 echo "MariaDB is up and running!"
 

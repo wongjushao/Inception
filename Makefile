@@ -43,4 +43,8 @@ logs:
 
 restart: down up
 
-.PHONY: all build up start down clean fclean re status logs restart
+init-dirs:
+	@sudo mkdir -p $(DATA_PATH)/mysql $(DATA_PATH)/wordpress secrets/ssl
+	@sudo chown -R $(USER):$(USER) $(DATA_PATH) secrets/ssl
+
+.PHONY: all build up start down clean fclean re status logs restart init-dirs
