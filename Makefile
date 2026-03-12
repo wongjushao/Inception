@@ -13,8 +13,8 @@ build-nocache:
 	@docker compose -f $(COMPOSE_FILE) build --no-cache
 
 up:
-	@mkdir -p $(DATA_PATH)/mysql $(DATA_PATH)/wordpress secrets/ssl
-	@sudo chown -R $(USER):$(USER) $(DATA_PATH)/mysql $(DATA_PATH)/wordpress secrets/ssl
+	@sudo mkdir -p $(DATA_PATH)/mysql $(DATA_PATH)/wordpress secrets/ssl
+	@sudo chown -R $(USER):$(USER) $(DATA_PATH) secrets/ssl
 	@docker compose -f $(COMPOSE_FILE) up -d
 	@echo "Access your site at: https://$(DOMAIN_NAME)"
 	@echo "If it does not resolve, add this on the host:"
@@ -28,9 +28,10 @@ down:
 clean:
 	@docker compose -f $(COMPOSE_FILE) down -v
 
-fclean: clean
-	@docker compose -f $(COMPOSE_FILE) down -v --rmi all
+fclean:
+	@docker compose -f $(COMPOSE_FILE) down -v --rmi all --remove-orphans
 	@sudo rm -rf $(DATA_PATH)/mysql $(DATA_PATH)/wordpress secrets/ssl
+	@docker system prune -af --volumes 2>/dev/null || true
 
 re: fclean build-nocache up
 
