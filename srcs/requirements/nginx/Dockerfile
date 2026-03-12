@@ -4,7 +4,8 @@ FROM debian:bullseye
 RUN apt-get update && \
     apt-get install -y \
     nginx \
-    openssl && \
+    openssl \
+    gettext-base && \
     rm -rf /var/lib/apt/lists/*
 
 # Copy NGINX configuration template
